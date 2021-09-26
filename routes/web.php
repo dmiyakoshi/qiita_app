@@ -14,12 +14,15 @@ use Illuminate\Support\Facades\Auth;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+// Route::get('/', function () {
+//     return view('');
+// });
 
-Route::resource('articles', App\Http\Controllers\ArticleController::class);
+Route::get('/', [App\Http\Controllers\ArticleController::class, 'index']);
 
+Route::resource('articles', App\Http\Controllers\ArticleController::class)->middleware('auth');
+
+Route::redirect('/', route('articles.index'), 302);
 Auth::routes();
 
 Route::get('/home', [\App\Http\Controllers\HomeController::class, 'index'])->name('home');
